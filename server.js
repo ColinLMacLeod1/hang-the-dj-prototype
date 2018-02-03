@@ -4,6 +4,7 @@ const axios = require('axios')
 const app = express()
 const path = require('path')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
 
 //Middleware
 app.use(cors())
@@ -25,20 +26,13 @@ const publicPath = express.static(path.join(__dirname, './dist'));
 const port = 3000
 
 // MongoDB Connection
-//mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 
-// mongoose.connect(dbConfig.uri, {
-//   UseMongoClient: true
-// }).catch(function(err){
-//   console.log(err)
-// });
-//
-//
-// mongoose.connection.once('open',function(){
-// 	console.log('Connection made');
-// }).on('error',function(error){
-// 	console.log('Connection error',error);
-// });
+mongoose.connect("mongodb://root:RD5f63snrUJc@35.224.232.189:27017").then(
+  ()=> console.log("Connection Made!"),
+  err => console.log(err))
+
+
 const data ={
   client_id: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
   auth: '',
