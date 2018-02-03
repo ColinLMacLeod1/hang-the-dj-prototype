@@ -5,6 +5,8 @@ import Header from './header';
 import Home from './home';
 import Profile from './profile';
 import Party from './party';
+import Settings from './settings';
+
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -24,6 +26,8 @@ export default class App extends Component {
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 					<Party path="/party" />
+                    <Settings path="/settings" />
+
 				</Router>
 			</div>
 		);
