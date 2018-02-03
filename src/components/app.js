@@ -28,6 +28,7 @@ export default class App extends Component {
 					<Party path="/party" />
                     <Settings path="/settings" />
                     <Spotify path="/spotify"/>
+
 				</Router>
 			</div>
 		);
