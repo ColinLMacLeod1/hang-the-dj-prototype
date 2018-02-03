@@ -16,19 +16,15 @@ module.exports = async (sender, receiver, message, createdDatetime, context) => 
   console.log(message)
   mongoose.Promise = global.Promise;
 
-  mongoose.connect("mongodb://root:RD5f63snrUJc@35.224.232.189", {
-    UseMongoClient: true
-  }).catch(function(err){
-    console.log(err)
-    return error;
-  });
-
-  await mongoose.connection.once('open',function(){
-   console.log('Connection made');
-   return "Connection";
-  }).on('error',function(error){
-   console.log('Connection error',error);
-   return error;
-  });
+  await mongoose.connect("mongodb://root:RD5f63snrUJc@35.224.232.189:27017").then(
+    ()=>{
+      console.log("connecection made");
+      return "Connection made"
+    },
+    err=>{
+      console.log(err);
+      return err;
+    }
+  );
 
 };
