@@ -7,10 +7,6 @@ import Profile from './profile';
 import Party from './party';
 import Settings from './settings';
 import Spotify from './spotify';
-<<<<<<< HEAD
-
-=======
->>>>>>> ae7476195823f201cf331fa0b2244d8a2973e83d
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -30,13 +26,9 @@ export default class App extends Component {
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 					<Party path="/party" />
-                    <Settings path="/settings" />
-<<<<<<< HEAD
-                    <Spotify path="/spotify"/>
+          <Settings path="/settings" />
+          <Spotify path="/spotify"/>
 
-=======
-					<Spotify path="/spotify/" />
->>>>>>> ae7476195823f201cf331fa0b2244d8a2973e83d
 				</Router>
 			</div>
 		);
