@@ -1,7 +1,43 @@
 @import '~style/helpers';
 
-.home {
-	padding: 56px 20px;
-	min-height: 100%;
-	width: 100%;
+body{
+  color: white;
+  background: #212121;
+  display: grid;
+
 }
+
+.home {
+  padding: 56px 20px;
+  min-height: 100%;
+  width: 100%;
+  font: 300 1em 'Fira Sans', sans-serif;
+  text-align: center;
+
+}
+
+h1{
+  color: white;
+  text-align: center
+}
+.mainbutton{
+    background: none;
+    border: 2px solid;
+    font: 300 1em 'Fira Sans', sans-serif;
+    line-height: 1;
+    margin: 0.5em;
+    padding: 1em 2em;
+    color: #c0eddc;
+    transition: 0.25s;
+
+}
+.mainbutton:hover,
+.mainbutton:focus {
+    box-shadow:
+      inset -6.9em 0 0 0 #2ac288,
+      inset 6.9em 0 0 0 #2ac288;  
+    border-color: #2ac288;
+    color: #fff;
+}
+
+

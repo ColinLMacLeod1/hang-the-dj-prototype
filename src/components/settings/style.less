@@ -3,16 +3,108 @@
 
 .settings{
   padding: 56px 20px;
+  background: #212121;
+  color: white;
+  text-align: center;
+}
+
+.submit{
+    background: none;
+    border: 2px solid;
+    font: 300 1em 'Fira Sans', sans-serif;
+    line-height: 1;
+    margin: 0.5em;
+    padding: 1em 2em;
+    color: #c0eddc;
+    transition: 0.25s;
+    margin: 15px 0 15px 0;
+
+}
+.submit:hover,
+.submit:focus {
+    box-shadow:
+      inset -6.9em 0 0 0 #2ac288,
+      inset 6.9em 0 0 0 #2ac288;  
+    border-color: #2ac288;
+    color: #fff;
+}
+
+.supportText{
+  text-align: center;
+  display: inline-block;
+  width: 325px;
+  margin: auto;
 
 }
 
-.song{
-  display: flex;
-  justify-content: center;
-  margin: 2vh 20vw 2vh 20vw;
-  width: 60vw;
+
+.wrapper{
+  text-align: center;
 }
 
-input{
-    margin-left: 20px;
+.formWrapper{
+  text-align: left;
+  display: inline-block;
+  margin-top: 25px;
+}
+
+span +input{
+  margin-left: 15px;
+}
+
+form{
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  grid-gap: 20px;
+}
+
+
+label {
+  text-align: left;
+  grid-column: 1/2;
+  }
+
+input,
+.inputWrapper{
+    grid-column: 2/3;
+  }
+
+button{
+  grid-column-end: span 2;
+}
+
+
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: gray;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 110%;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 15px;
+  right: 100%; /* To the left of the tooltip */
+  margin-top: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent gray transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
