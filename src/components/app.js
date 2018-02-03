@@ -25,7 +25,7 @@ export default class App extends Component {
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 					<Party path="/party" />
-					<Spotify path="/spotify/:token" />
+					<Spotify path="/spotify/" />
 				</Router>
 			</div>
 		);

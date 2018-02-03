@@ -1,6 +1,9 @@
 import {h, Component} from 'preact'
 import axios from 'axios'
 import style from './style.less'
+const parseQueryString = require('query-string');
+
+
 
 export default class Spotify extends Component {
   constructor(props){
@@ -8,11 +11,17 @@ export default class Spotify extends Component {
     this.state={
       client_id: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
       auth: '',
-      token: props.token,
+      token: props.code,
       response: 'No response yet',
       redirect: 'http://localhost:8081/spotify/',
       responseType: 'code'
     }
+  }
+
+  componentDidMount() {
+    let queryString = this.props.location.search;
+    let queryParams = parseQueryString.parse(queryString);
+    console.log(queryParams)
   }
 
   getAuth = () => {
