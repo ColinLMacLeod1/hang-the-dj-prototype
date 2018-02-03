@@ -1,9 +1,7 @@
 import {h, Component} from 'preact'
 import axios from 'axios'
 import style from './style.less'
-const parseQueryString = require('query-string');
-
-
+//import * as SpotifyWebAPI from 'spotify-web-api-js';
 
 export default class Spotify extends Component {
   constructor(props){
@@ -16,16 +14,26 @@ export default class Spotify extends Component {
       response: 'No response yet',
       redirect: 'http://localhost:8081/spotify/',
       responseType: 'code',
-      scope: 'user-read-playback-state user-read-private'
+      scopes: ['user-read-playback-state','user-read-private']
     }
   }
-
-  componentDidMount() {
-    let queryString = this.props.location.search;
-    let queryParams = parseQueryString.parse(queryString);
-    console.log(queryParams)
+  
+  /*
+  getAccessToken = () => {
+      console.log(SpotifyWebAPI);
+      
+      var credentials = {
+          clientID: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
+          clientSecret: 'ba7bc2e1625a494fbd59feea5c4d2055',
+          redirectURI: 'http://localhost:8081/spotify/'
+      };
+      
+      var spotifyApi = new SpotifyWebApi(credentials);
+      var authorizeURL = spotifyApi.createAurhorizeURL(this.state.scopes, 0);
+      console.log(authorizeURL);
   }
-
+  */
+  
   getAuth = () => {
     const self = this;
     axios.get('https://accounts.spotify.com/authorize',{
@@ -47,12 +55,12 @@ export default class Spotify extends Component {
       const self = this;
     axios.post('https://accounts.spotify.com/api/token',{
         headers:{
-            'Authorization': 'Basic '+btoa('e00c7cdbb7854aed9f48a2b48cbc85ba'+':'+'ba7bc2e1625a494fbd59feea5c4d2055'),
+       //     'Authorization': 'Basic '+btoa('e00c7cdbb7854aed9f48a2b48cbc85ba'+':'+'ba7bc2e1625a494fbd59feea5c4d2055'),
             'Content-Type':'application/x-www-form-urlencoded'
         },
         params: {
-            //client_id: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
-            //client_secret: 'ba7bc2e1625a494fbd59feea5c4d2055',
+            client_id: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
+            client_secret: 'ba7bc2e1625a494fbd59feea5c4d2055',
             grant_type: "authorization_code",
             code: self.state.token,
             redirect_uri: self.state.redirect,
