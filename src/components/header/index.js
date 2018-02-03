@@ -12,7 +12,7 @@ export default class Header extends Component {
 					<Link href="/profile">Me</Link>
 					<Link href="/profile/john">John</Link>
 					<Link href="/party">Party</Link>
-					<Link href="/spotify/No token">Spotify</Link>
+					<Link href="/spotify/?code=NoCodeYet">Spotify</Link>
 				</nav>
 			</header>
 		);

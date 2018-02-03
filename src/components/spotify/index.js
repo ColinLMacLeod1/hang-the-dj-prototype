@@ -48,6 +48,9 @@ export default class Spotify extends Component {
         <p> Token: {this.state.token}</p>
         <p> Response: {this.state.response}</p>
         <button onClick={this.getAuth}> Get Auth</button>
+        <a href="https://accounts.spotify.com/en/authorize?client_id=e00c7cdbb7854aed9f48a2b48cbc85ba&response_type=code&redirect_uri=http:%2F%2Flocalhost:8081%2Fspotify%2F">
+          <button> Spotify Auth </button>
+        </a>
       </div>
     )
   }
