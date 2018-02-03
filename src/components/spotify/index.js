@@ -20,27 +20,7 @@ export default class Spotify extends Component {
       scopes: ['user-read-playback-state','user-read-private']
     }
   }
-<<<<<<< HEAD
-  
-  /*
-  getAccessToken = () => {
-      console.log(SpotifyWebAPI);
-      
-      var credentials = {
-          clientID: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
-          clientSecret: 'ba7bc2e1625a494fbd59feea5c4d2055',
-          redirectURI: 'http://localhost:8081/spotify/'
-      };
-      
-      var spotifyApi = new SpotifyWebApi(credentials);
-      var authorizeURL = spotifyApi.createAurhorizeURL(this.state.scopes, 0);
-      console.log(authorizeURL);
-  }
-  */
-  
-=======
 
->>>>>>> ac16c83df75c5f32ff1e35d61e55a494a62f24a5
   getAuth = () => {
     const self = this;
     axios.get('https://accounts.spotify.com/authorize',{
@@ -76,7 +56,7 @@ export default class Spotify extends Component {
       console.log(response.data.access_token)
     ))
   }
-  
+
   playCurrentSong = () => {
       const self = this;
         axios.get('https://api.spotify.com/v1/me/player/play',{
