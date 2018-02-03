@@ -1,10 +1,7 @@
 import {h, Component} from 'preact'
 import axios from 'axios'
 import style from './style.less'
-<<<<<<< HEAD
 //import * as SpotifyWebAPI from 'spotify-web-api-js';
-=======
->>>>>>> ac16c83df75c5f32ff1e35d61e55a494a62f24a5
 
 export default class Spotify extends Component {
   constructor(props){
