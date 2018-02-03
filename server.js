@@ -55,6 +55,22 @@ axios.get('https://accounts.spotify.com/authorize',{
   console.log(response.data)
 ))
 
+axios.post('https://accounts.spotify.com/api/token',{
+    headers:{
+   //     'Authorization': 'Basic '+btoa('e00c7cdbb7854aed9f48a2b48cbc85ba'+':'+'ba7bc2e1625a494fbd59feea5c4d2055'),
+        'Content-Type':'application/x-www-form-urlencoded'
+    },
+    params: {
+        client_id: 'e00c7cdbb7854aed9f48a2b48cbc85ba',
+        client_secret: 'ba7bc2e1625a494fbd59feea5c4d2055',
+        grant_type: "authorization_code",
+        code: "AQDJQikUEoe8MJXDrknE8lo8osBQ9TqERrP3FRHRFisqoPN6MO1vHZ2SubGnWjmGntbouznODA9QNzPoptdyqwZtwYe4cfepwn17YzyU_5VIkVyHK2c_bOyThjrslPVgqpXmZuxJ-MIhWqgeKI-3MGS8O5tJXf6Djb1FHqvoP9DdL404UAFZZhWMV-Wlooz8BcjiUDKKBLpA9_RUORJZJrPkF5nrgCmuqgm2ySKOu3w",
+        redirect_uri: 'http://localhost:8081/spotify/',
+    }
+}).then((response)=>(
+  console.log(response.data.access_token)
+)).catch((err)=>console.log(err))
+
 // Server Port
 app.listen(process.env.PORT || port,function() {
 	console.log('App listening on port', port)
