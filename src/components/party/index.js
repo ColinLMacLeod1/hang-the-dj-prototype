@@ -13,10 +13,19 @@ export default class Party extends Component {
     }
   }
 
+  addSong = () => {
+    var array = this.state.queue
+    array.push({song: "Song", artist: "Artist"})
+    this.setState({
+      queue: array
+    })
+  }
+
   render() {
     return (
       <div class={style.party}>
         <h1 style={{width:"100vw"}}> Party Page </h1>
+        <button onClick={()=>this.addSong()}>Add Song</button>
         <br></br>
         {this.state.queue.map((songObj)=>(
           <div className="song">
