@@ -10,11 +10,38 @@ export default class Party extends Component {
         banning:'no',
         override:'yes',
         numSongs:5,
-        token: props.token
-
+        code: props.code,
+        token: props.access_token,
+        redirect: 'http://localhost:8081/settings/',
+        responseType: 'code'
     }
   }
 
+  componentDidMount() {
+    this.getToken();
+  }
+  
+  //get access token
+  getToken = () => {
+      const self = this;
+    axios.request('https://accounts.spotify.com/api/token',{
+        method: 'post',
+        headers:{
+            'Authorization': 'Basic '+btoa('833338d91c9a48718c8c12cf886287d7'+':'+'fa46eb34f64b45b6851af41a62b219d1'),
+            'Content-Type':'application/x-www-form-urlencoded'
+        }, data: qs.stringify({
+            grant_type: "authorization_code",
+            code: self.state.token,
+            redirect_uri: self.state.redirect,
+        })
+    }).then((response)=>(
+      console.log(response.data.access_token),
+      self.setState({
+          token: response.data.access_token
+      })
+    ))
+  }
+  
   addSong = () => {
     var array = this.state.queue
     array.push({song: "Song", artist: "Artist"})
