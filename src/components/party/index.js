@@ -95,26 +95,22 @@ export default class Party extends Component {
         var tNum = response.data.tracks.items[0].track_number
         var imgURL = response.data.tracks.items[0].album.images[1].url
         var art = response.data.tracks.items[0].artists[0].name
-
+        var length = response.data.tracks.items[0].duration_ms
+        
         songObj={
             title: n,
             album: albumID,
             trackNum: tNum,
             artwork: imgURL,
-            artist: art
+            artist: art,
+            time: length
         }
-        self.setState({
-            currentSong: songObj
-        })
       });
-      
+      return songObj;
     }
    
-  
-  
   //plays a specific song based on a song object
-  playSong = () =>  {
-      let songObj = this.state.currentSong;
+  playSong = (songObj) =>  {
       var trackNum = songObj.trackNum-1;
         const self = this;
         axios.request('https://api.spotify.com/v1/me/player/play',{
