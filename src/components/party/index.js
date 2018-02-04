@@ -100,14 +100,18 @@ export default class Party extends Component {
         var imgURL = response.data.tracks.items[0].album.images[1].url
         var art = response.data.tracks.items[0].artists[0].name
         var length = response.data.tracks.items[0].duration_ms
+        var albumName = response.data.tracks.items[0].album.name
 
+        console.log(response.data.tracks.items[0]);
+        
         songObj={
             title: n,
             album: albumID,
             trackNum: tNum,
             artwork: imgURL,
             artist: art,
-            time: length
+            time: length,
+            albumName: albumName
         }
         self.setState({
           currentSong: songObj
@@ -140,9 +144,9 @@ export default class Party extends Component {
     return (
       <div class={style.party}>
         <h1 style={{width:"100vw"}}> Your Party Queue </h1>
-        <button onClick={()=>this.playNext()}>Play Next</button>
+        <div class={style.partyNum}>Your Party Number is: <span>(226) 212-4435</span></div>
         <div class={style.wrapper}>
-              <div class={style.queueHeader}>Now Playing</div>
+              <div class={style.queueHeader}>Now Playing: </div>
 
         <div class={style.nowPlayingWrapper}>
           <Card className={style.nowPlayingElement}>
@@ -151,11 +155,11 @@ export default class Party extends Component {
             </CardMedia>
             <CardTitle title={this.state.currentSong.title} subtitle={this.state.currentSong.artist}/>
             <CardText style={{padding:'0 16px 16px 5px'}}>
-              {this.state.currentSong.album}
+              {this.state.currentSong.albumName}
             </CardText>
           </Card>
         </div>
-      <div class={style.queueHeader} >Up Next</div>
+      <div class={style.queueHeader} >Up Next: <span><button class={style.nextSongBtn} onClick={()=>this.playNext()}>Play Next</button></span></div>
             <div class={style.queueWrapper}>
             {this.state.queue.map((songObj,index)=>(
             <Card className={style.queueElement} key={index}>
@@ -166,10 +170,7 @@ export default class Party extends Component {
             </Card>
             ))}
           </div>
-
         </div>
-        <button onClick={() => this.getSongObj("its raining men")}>Get Song</button>
-        <button onClick={() => this.playSong() }>Play song</button>
       </div>
 
     )
