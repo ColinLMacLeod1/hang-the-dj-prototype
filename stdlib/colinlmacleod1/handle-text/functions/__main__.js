@@ -1,6 +1,6 @@
 const lib = require('lib')({token: "axNvrmzjPbg4FOWFi_WaHT49FoIWjnaxZZLTrft8tb9wZc-R7UyhUQgqskQF3x_U"});
 const mongoose = require('mongoose');
-const Message = require('../models/messages.js');
+const Song = require('../models/songs.js');
 
 /**
  * @param {string} sender The phone number that sent the text to be handled
@@ -12,19 +12,17 @@ const Message = require('../models/messages.js');
 
 
 
-module.exports = async (sender, receiver, message, createdDatetime, context) => {
-  console.log(message)
-  mongoose.Promise = global.Promise;
+module.exports = async (sender="Test", receiver="Test", message="Test", createdDatetime="Test", context) => {
+  var messages = message.split(" - ");
 
-  await mongoose.connect("mongodb://root:RD5f63snrUJc@35.224.232.189:27017").then(
-    ()=>{
-      console.log("connecection made");
-      return "Connection made"
-    },
-    err=>{
-      console.log(err);
-      return err;
-    }
-  );
-
+  console.log(messages)
+  await mongoose.connect("mongodb://root:TzZo9fMonrur@35.193.38.141:27017");
+  console.log("Connected")
+  var newSong = new Song({
+    sender: sender,
+    title: messages[0],
+    artist: messages[1]
+	});
+	console.log(newSong)
+  await newSong.save();
 };
