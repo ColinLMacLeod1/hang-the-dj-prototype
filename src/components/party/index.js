@@ -12,6 +12,7 @@ export default class Party extends Component {
       currentSong: {title:'Hang the DJ',artist:'Jeff Tovar',albumName:'Hang the DJ',artwork:'../../assets/images/hang-the-dj.png',trackNum:1},
       played: [],
       queue: [],
+      allSongs: [],
       token: props.token,
       ugly: 0
 
@@ -28,7 +29,8 @@ export default class Party extends Component {
     const self = this;
     axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
       self.setState({
-        queue:res.data
+        queue:res.data,
+        allSongs:res.data,
       })
     })
   }
@@ -36,41 +38,41 @@ export default class Party extends Component {
   getQueue = () => {
     const self = this;
     var newQueue = self.state.queue
+    var newSongs = self.state.allSongs
     axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
       if(self.state.queue.length>0){
         for(var i=0;i<res.data.length;i++){
           var count = 0;
-          for(var j=0;j<self.state.queue.length;j++){
-            if(res.data[i].title==self.state.queue[j].title){
-              break
+          for(var z=0;z<self.state.allSongs.length;z++){
+            if(res.data[i].title==self.state.allSongs[z].title){
+                count++
             }
+          }
+          if(self.state.currentSong.title !== res.data[i].title){
             count++
           }
-          for(var k=0;k<self.state.played.length;k++){
-            if(res.data[i].title==self.state.played[k].title){
-              break
-            }
-            count++
-          }
-          if(count == self.state.played.length+self.state.queue.length && self.state.currentSong.title !== res.data[i].title){
+          if(count == 0){
             newQueue.push(res.data[i])
+            newSongs.push(res.data[i])
+            self.setState({
+              queue:newQueue,
+              allSongs: newSongs
+            })
           }
         }
-        self.setState({
-          queue:newQueue
-        })
       }
     })
   }
 
   playNext = () => {
     const self = this;
-    self.state.played.push(this.state.currentSong);
-    self.getSongObj(self.state.queue[0].title)
+    var song = self.state.queue[0].title;
     let newQueue = self.state.queue.slice(1)
+    console.log("NewQ : ", newQueue)
     self.setState({
       queue: newQueue
     })
+    self.getSongObj(song)
 
   }
 
