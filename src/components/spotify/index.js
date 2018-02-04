@@ -2,13 +2,11 @@ import {h, Component} from 'preact'
 import axios from 'axios'
 import style from './style.less'
 import qs from 'qs'
-//import * as SpotifyWebAPI from 'spotify-web-api-js';
 
 export default class Spotify extends Component {
   constructor(props){
     super(props)
     this.state={
-        //Dave's id: e00c7cdbb7854aed9f48a2b48cbc85ba
       client_id: '833338d91c9a48718c8c12cf886287d7',
       auth: '',
       token: props.code,
@@ -20,6 +18,7 @@ export default class Spotify extends Component {
     }
   }
 
+  //not needed
   getAuth = () => {
     const self = this;
     axios.get('https://accounts.spotify.com/authorize',{
@@ -35,10 +34,9 @@ export default class Spotify extends Component {
       console.log(response.data)
     ))
   }
-  //encoded client id ZTAwYzdjZGJiNzg1NGFlZDlmNDhhMmI0OGNiYzg1YmE=
-  // client secret : YmE3YmMyZTE2MjVhNDk0ZmJkNTlmZWVhNWM0ZDIwNTUg
+
+  //get access token
   getToken = () => {
-      //var temp = 'Authorization=Basic '+btoa('e00c7cdbb7854aed9f48a2b48cbc85ba'+':'+'ba7bc2e1625a494fbd59feea5c4d2055');
       const self = this;
     axios.request('https://accounts.spotify.com/api/token',{
         method: 'post',
@@ -56,6 +54,7 @@ export default class Spotify extends Component {
     ))
   }
 
+  //pause current song
   pauseCurrentSong = () => {
       console.log(this.state.token2);
       const self = this;
@@ -69,26 +68,28 @@ export default class Spotify extends Component {
         ))
   }
 
-  playSong = () => {
-        console.log("Playing song");
+  //plays a specific trackID
+  playSong = (trackID) => {
+        console.log("Playing song: "+trackID);
         const self = this;
-        axios.request('https://api.spotify.com/v1/me/player/play/',{
+        axios.request('https://api.spotify.com/v1/me/player/play',{
             method: 'put',
             headers: {
                 'Authorization': 'Bearer ' + this.state.token2
             }, params: {
-            uris:["spotify:track:3n3Ppam7vgaVa1iaRUc9Lp"]
+            'uris':["spotify:track:"+trackID]
             }
         }).then((response)=>(
           console.log(response.data)
         ))
   }
   
+  //grab a specific track
   getTrack = () => {
       console.log(this.state.token2);
         const self = this;
         var killersID = '3n3Ppam7vgaVa1iaRUc9Lp'
-        axios.request('https://api.spotify.com/v1/tracks/'+killersID,{
+        axios.request('https://api.spotify.com/v1/tracks'+killersID,{
             method: 'get',
             headers: {
                 'Authorization': 'Bearer ' + this.state.token2
@@ -98,19 +99,27 @@ export default class Spotify extends Component {
         ))
   }
   
+  //takes a track name as a string, finds the name and ID
   searchTrack = (toSearch) => {
+      
+      console.log(toSearch);
+      console.log(this.state.token2);
+      
       console.log("Searching for track.");
       const self = this;
-      axios.request('https://api.spotify.com/v1/search'),{
+      axios.request('https://api.spotify.com/v1/search',{
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + this.state.token2
+            'Authorization': 'Bearer ' + this.state.token2,
         }, params: {
             q: toSearch,
             type: 'track',
             limit: 1
         }
-      }
+      }).then((response)=>(
+        console.log(response.data.tracks.items[0].name),
+        console.log(response.data.tracks.items[0].id)
+        ));
   }
   
   render() {
@@ -120,14 +129,14 @@ export default class Spotify extends Component {
         <p> Auth: {this.state.auth}</p>
         <p> Token: {this.state.token}</p>
         <p> Response: {this.state.response}</p>
-        <button onClick={this.getAuth}> Get Auth</button>
         <a href="https://accounts.spotify.com/en/authorize?client_id=833338d91c9a48718c8c12cf886287d7&response_type=code&redirect_uri=http:%2F%2Flocalhost:8081%2Fspotify%2F&scope=user-modify-playback-state+user-read-private">
           <button> Spotify Auth </button>
         </a>
         <button onClick={this.pauseCurrentSong}>Pause Current Song</button>
-        <button onClick={this.playCurrentSong}>Play Current Song</button>
+        <button onClick={() => this.playSong('1jNOi6m3Hn8nLEeHCp5Msr')}>Play Current Song</button>
         <button onClick={this.getTrack}>Get the killers</button>
         <button onClick={this.getToken}>Get token </button>
+        <button onClick={() => this.searchTrack('seven nation army')}>Find the rain.</button>
       </div>
     )
   }
