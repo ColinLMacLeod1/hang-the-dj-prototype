@@ -93,9 +93,9 @@ export default class Party extends Component {
         var n = response.data.tracks.items[0].name
         var albumID = response.data.tracks.items[0].album.id
         var tNum = response.data.tracks.items[0].track_number
-        var imgURL = response.data.tracks.items[0].album.images[1]
+        var imgURL = response.data.tracks.items[0].album.images[1].url
         var art = response.data.tracks.items[0].artists[0].name
-        
+
         songObj={
             title: n,
             album: albumID,
