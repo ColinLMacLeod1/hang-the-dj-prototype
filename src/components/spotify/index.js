@@ -14,7 +14,8 @@ export default class Spotify extends Component {
       response: 'No response yet',
       redirect: 'http://localhost:8081/spotify/',
       responseType: 'code',
-      scopes: ['user-read-playback-state','user-read-private']
+      scopes: ['user-read-playback-state','user-read-private'],
+      imgurl: ''
     }
   }
 
@@ -76,8 +77,9 @@ export default class Spotify extends Component {
             method: 'put',
             headers: {
                 'Authorization': 'Bearer ' + this.state.token2
-            }, params: {
-            'uris':["spotify:track:"+trackID]
+            }, body:{
+                context_uri:"spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"
+            //'uris':["spotify:track:"+trackID]
             }
         }).then((response)=>(
           console.log(response.data)
@@ -118,7 +120,9 @@ export default class Spotify extends Component {
         }
       }).then((response)=>(
         console.log(response.data.tracks.items[0].name),
-        console.log(response.data.tracks.items[0].id)
+        console.log(response.data.tracks.items[0].id),
+        console.log(response.data.tracks.items[0].available_markets),
+        self.state.imgurl = response.data.tracks.items[0].images[0]
         ));
   }
   
@@ -133,10 +137,11 @@ export default class Spotify extends Component {
           <button> Spotify Auth </button>
         </a>
         <button onClick={this.pauseCurrentSong}>Pause Current Song</button>
-        <button onClick={() => this.playSong('1jNOi6m3Hn8nLEeHCp5Msr')}>Play Current Song</button>
+        <button onClick={() => this.playSong('5g6nzsOxwxdoj6sqAl0NXB')}>Play Current Song</button>
         <button onClick={this.getTrack}>Get the killers</button>
         <button onClick={this.getToken}>Get token </button>
-        <button onClick={() => this.searchTrack('seven nation army')}>Find the rain.</button>
+        <button onClick={() => this.searchTrack('its raining men')}>Find the rain.</button>
+        <img src={this.state.imgurl} />
       </div>
     )
   }
