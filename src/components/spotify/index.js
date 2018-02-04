@@ -15,7 +15,6 @@ export default class Spotify extends Component {
       redirect: 'http://localhost:8081/spotify/',
       responseType: 'code',
       scopes: ['user-read-playback-state','user-read-private'],
-      imgurl: '',
       queue:[]
     }
   }

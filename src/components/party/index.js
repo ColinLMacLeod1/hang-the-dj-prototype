@@ -2,6 +2,7 @@ import {h, Component} from 'preact';
 import style from './style.less';
 import axios from 'axios'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import qs from 'qs'
 
 
 export default class Party extends Component {
@@ -34,6 +35,7 @@ export default class Party extends Component {
   playNext = () => {
     this.state.played.push(this.state.currentSong);
     console.log(this.state.played)
+    
     let song =  this.play(this.state.queue[0].title)
 
     let newQueue = this.state.queue.slice(1)
@@ -41,14 +43,68 @@ export default class Party extends Component {
       currentSong:song,
       queue: newQueue
     })
-
   }
 
-  play = (songTitle) => {
-    console.log(songTitle)
-    return {title:songTitle,artist:'Coldplay',album:'Viva La Vida',artwork:'./assets/images/test.jpg',id:''};
-  }
+  //takes a song name and returns a song object
+  play = (toSearch) => {
+      var albumID = '';
+      var trackNum = '';
+      var songObj = {};
+      console.log(toSearch);
+      console.log(this.state.token2);
 
+      console.log("Searching for track.");
+      const self = this;
+      axios.request('https://api.spotify.com/v1/search',{
+        method: 'get',
+        headers: {
+            'Authorization': 'Bearer ' + this.state.token2,
+        }, params: {
+            q: toSearch,
+            type: 'track',
+            limit: 1
+        }
+      }).then((response)=>{
+      
+        var n = response.data.tracks.items[0].name
+        var albumID = response.data.tracks.items[0].album.id
+        var tNum = response.data.tracks.items[0].track_number
+        var imgURL = response.data.tracks.items[0].album.images[1]
+        var art = response.data.tracks.items[0].artists[0].name
+        
+        songObj={
+            title: n,
+            album: albumID,
+            trackNum: tNum,
+            artwork: imgURL,
+            artist: art
+        }
+        
+      });
+     this.playSong(songObj);
+     return songObj;
+    }
+   
+  }
+  
+  //plays a specific song based on albumID and track number
+  playSong = (songObj) => {
+      trackNum = trackNum-1;
+        const self = this;
+        axios.request('https://api.spotify.com/v1/me/player/play',{
+            method: 'put',
+            headers: {
+                'Authorization': 'Bearer ' + self.state.token2
+            }, data:{
+                "context_uri": "spotify:album:"+songObj.albumID,
+                "offset": { "position" : songObj.trackNum }         
+            }
+        }).then((response,req)=>{
+          console.log(response.data)
+          console.log(trackNum)
+        })
+  }
+  
   render() {
     return (
       <div class={style.party}>
