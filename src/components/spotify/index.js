@@ -51,7 +51,9 @@ export default class Spotify extends Component {
         })
     }).then((response)=>(
       console.log(response.data.access_token),
-      this.state.token2 = response.data.access_token
+      self.setState({
+          token2: response.data.access_token
+      })
     ))
   }
 
@@ -71,19 +73,22 @@ export default class Spotify extends Component {
 
   //plays a specific trackID
   playSong = (trackID) => {
+      var uris = "spotify:track:"+trackID;
+      console.log(uris);
         console.log("Playing song: "+trackID);
         const self = this;
         axios.request('https://api.spotify.com/v1/me/player/play',{
             method: 'put',
             headers: {
-                'Authorization': 'Bearer ' + this.state.token2
-            }, body:{
-                context_uri:"spotify:album:1Je1IMUlBXcx1Fz0WE7oPT"
-            //'uris':["spotify:track:"+trackID]
+                'Authorization': 'Bearer ' + self.state.token2
+            }, data:{
+                "context_uri": "spotify:album:0Um71BYb1Zl8Oa6vSvn2ox",
+                "offset": { "position" : 18 } //this was track '19'
             }
-        }).then((response)=>(
+        }).then((response,req)=>{
           console.log(response.data)
-        ))
+          console.log(trackID)
+        })
   }
   
   //grab a specific track
@@ -94,7 +99,7 @@ export default class Spotify extends Component {
         axios.request('https://api.spotify.com/v1/tracks'+killersID,{
             method: 'get',
             headers: {
-                'Authorization': 'Bearer ' + this.state.token2
+                'Authorization': 'Bearer ' + self.state.token2
             }
         }).then((response)=>(
           console.log(response.data.artists)
@@ -119,11 +124,13 @@ export default class Spotify extends Component {
             limit: 1
         }
       }).then((response)=>(
-        console.log(response.data.tracks.items[0].name),
-        console.log(response.data.tracks.items[0].id),
-        console.log(response.data.tracks.items[0].available_markets),
-        self.state.imgurl = response.data.tracks.items[0].images[0]
-        ));
+        console.log("Album id: "+response.data.tracks.items[0].album.id),
+        console.log("Track id: "+response.data.tracks.items[0].id)));
+        /*
+        self.setState({
+            imgurl: response.data.tracks.items[0].album.images[0]
+        })
+        */
   }
   
   render() {
@@ -137,7 +144,7 @@ export default class Spotify extends Component {
           <button> Spotify Auth </button>
         </a>
         <button onClick={this.pauseCurrentSong}>Pause Current Song</button>
-        <button onClick={() => this.playSong('5g6nzsOxwxdoj6sqAl0NXB')}>Play Current Song</button>
+        <button onClick={() => this.playSong('5g6nzsOxwxdoj6sqAl0NXB')}>Play Song</button>
         <button onClick={this.getTrack}>Get the killers</button>
         <button onClick={this.getToken}>Get token </button>
         <button onClick={() => this.searchTrack('its raining men')}>Find the rain.</button>
