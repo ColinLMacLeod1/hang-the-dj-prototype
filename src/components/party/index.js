@@ -9,7 +9,7 @@ export default class Party extends Component {
   constructor(props) {
     super(props);
     this.state={
-      currentSong: {title:'Hang the DJ',artist:'Jeff Tovar',albumName:'Hang the DJ',artwork:'../../assets/images/hang-the-dj.png',trackNum:1},
+      currentSong: {title:'Hang the DJ',artist:'Jeff Tovar',albumName:'Hang the DJ',artwork:'../../assets/images/dj-logo.jpg',trackNum:1},
       played: [],
       queue: [],
       allSongs: [],
