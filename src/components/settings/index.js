@@ -2,6 +2,7 @@ import {h, Component} from 'preact';
 import style from './style.less';
 import axios from 'axios'
 
+
 export default class Party extends Component {
   constructor(props) {
     super(props);
@@ -27,11 +28,9 @@ export default class Party extends Component {
     });
   }
 
-    
-    handleFormSubmit = (formSubmitEvent) => {
-        console.log(this);
-        formSubmitEvent.preventDefault();
-        console.log('You have selected:', this.state.banning, this.state.override, this.state.numSongs);
+  handleFormSubmit = (formSubmitEvent) => {
+    formSubmitEvent.preventDefault();
+    console.log('You have selected:', this.state.banning, this.state.override, this.state.numSongs);
   }
   
   render() {
@@ -70,7 +69,7 @@ export default class Party extends Component {
                       <input type="radio" name="override" value="yes" checked={this.state.override === 'yes'} onChange={this.handleOptionChange}/> <span>Yes</span> 
                       <input type="radio" name="override" value="no" checked={this.state.override === 'no'} onChange={this.handleOptionChange}/> <span>No</span>
               </div>
-               <button class={style.submit} type="submit">Start my Party!</button>
+               <button class={style.submit} type="submit">Start My Party!</button>
             </form>
           </div>
         </div>

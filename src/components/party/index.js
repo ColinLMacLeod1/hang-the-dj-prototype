@@ -1,15 +1,15 @@
 import {h, Component} from 'preact';
 import style from './style.less';
 import axios from 'axios'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 
 export default class Party extends Component {
   constructor(props) {
     super(props);
     this.state={
-      queue: [{song:"Twist adn Shout", artist:"The Beatles"},
-              {song:"My Generation", artist:"The Who"},
-              {song:"Start me up", artist:"The Rolling Stones"},
-              {song:"Hey There Delilah", artist:"The Plain White Ts"}]
+      currentSong: {name:'Viva La Vida',artist:'Coldplay',album:'Viva La Vida',artwork:'',id:''},
+      queue: [{name:'Viva La Vida',artist:'Coldplay',album:'Viva La Vida',artwork:'',id:''},{name:'Paradise',artist:'Coldplay',album:'Paradise',artwork:'',id:''},{name:'Adventure of a Lifetime',artist:'Coldplay',album:'Viva La Vida',artwork:'',id:''}]
     }
   }
 
@@ -24,16 +24,36 @@ export default class Party extends Component {
   render() {
     return (
       <div class={style.party}>
-        <h1 style={{width:"100vw"}}> Party Page </h1>
-        <button onClick={()=>this.addSong()}>Add Song</button>
-        <br></br>
-        {this.state.queue.map((songObj)=>(
-          <div className="song">
-            <h4>{songObj.song}</h4>
-            <h5>By {songObj.artist}</h5>
-          </div>
-        ))}
+        <h1 style={{width:"100vw"}}> Your Party Queue </h1>
+        <div class={style.wrapper}>
+              <div class={style.queueHeader}>Now Playing</div>
+  
+        <div class={style.nowPlayingWrapper}>
+          <Card className={style.nowPlayingElement}> 
+            <CardMedia>
+              <img src="./assets/images/test.jpg" alt="" />
+            </CardMedia>
+            <CardTitle title={this.state.currentSong.name} subtitle={this.state.currentSong.artist}/>
+            <CardText style={{padding:'0 16px 16px 5px'}}>
+              {this.state.currentSong.album}
+            </CardText>
+          </Card>    
+        </div>
+      <div class={style.queueHeader} >Up Next</div>
+            <div class={style.queueWrapper}>
+            {this.state.queue.map((songObj,index)=>(
+            <Card className={style.queueElement} key={index}>
+              <CardHeader style={{padding:'5px 16px 0px 16px'}}
+                title={songObj.name}
+                subtitle={songObj.artist}
+                avatar="./assets/images/test.jpg"/>
+            </Card>
+            ))}
+          </div> 
+          
+        </div>
       </div>
     )
   }
 }
+
