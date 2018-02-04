@@ -48,7 +48,7 @@ export default class Party extends Component {
                 count++
             }
           }
-          if(self.state.currentSong.title !== res.data[i].title){
+          if(self.state.currentSong.title == res.data[i].title){
             count++
           }
           if(count == 0){
@@ -60,6 +60,7 @@ export default class Party extends Component {
             })
           }
         }
+
       }
     })
   }
@@ -67,12 +68,20 @@ export default class Party extends Component {
   playNext = () => {
     const self = this;
     var song = self.state.queue[0].title;
+    var time = 0;
     let newQueue = self.state.queue.slice(1)
-    console.log("NewQ : ", newQueue)
     self.setState({
       queue: newQueue
     })
     self.getSongObj(song)
+    setTimeout(()=>{
+      time = self.state.currentSong.time-5005;
+      console.log(time)
+      setTimeout(()=>{
+        self.playNext()
+      },time)
+    }, 5000)
+
 
   }
 
@@ -102,8 +111,6 @@ export default class Party extends Component {
         var length = response.data.tracks.items[0].duration_ms
         var albumName = response.data.tracks.items[0].album.name
 
-        console.log(response.data.tracks.items[0]);
-        
         songObj={
             title: n,
             album: albumID,
@@ -135,9 +142,21 @@ export default class Party extends Component {
                 "offset": { "position" : trackNum }
             }
         }).then((response,req)=>{
-          console.log(response.data)
+          //console.log(response.data)
         })
 
+  }
+
+  removeSong = (index) => {
+    console.log("remove ", index)
+    var queue = this.state.queue;
+    var newSong = this.state.allSongs;
+    newSong.push(queue[index]);
+    queue.splice(index,1)
+    this.setState({
+      queue: queue,
+      allSongs: newSong
+    })
   }
 
   render() {
@@ -162,7 +181,7 @@ export default class Party extends Component {
       <div class={style.queueHeader} >Up Next: <span><button class={style.nextSongBtn} onClick={()=>this.playNext()}>Play Next</button></span></div>
             <div class={style.queueWrapper}>
             {this.state.queue.map((songObj,index)=>(
-            <Card className={style.queueElement} key={index}>
+            <Card className={style.queueElement} onClick={()=>{this.removeSong(index)}} key={index}>
               <CardHeader style={{padding:'5px 16px 0px 90px'}}
                 title={songObj.title}
                 subtitle={songObj.artist}
