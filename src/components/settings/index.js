@@ -1,7 +1,7 @@
 import {h, Component} from 'preact';
 import style from './style.less';
 import axios from 'axios'
-
+import qs from 'qs'
 
 export default class Party extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class Party extends Component {
             'Content-Type':'application/x-www-form-urlencoded'
         }, data: qs.stringify({
             grant_type: "authorization_code",
-            code: self.state.token,
+            code: self.state.code,
             redirect_uri: self.state.redirect,
         })
     }).then((response)=>(
@@ -62,6 +62,7 @@ export default class Party extends Component {
   }
 
   render() {
+      const self = this;
     return (
       <div class={style.settings}>
         <h1 style={{width:"100vw"}}> Party Settings </h1>
@@ -97,7 +98,7 @@ export default class Party extends Component {
                       <input type="radio" name="override" value="yes" checked={this.state.override === 'yes'} onChange={this.handleOptionChange}/> <span>Yes</span>
                       <input type="radio" name="override" value="no" checked={this.state.override === 'no'} onChange={this.handleOptionChange}/> <span>No</span>
               </div>
-               <button class={style.submit} type="submit">Start My Party!</button>
+               <Link href="/party/?token="+self.state.token><button class={style.submit} type="submit">Start My Party!</button></Link>
             </form>
           </div>
         </div>

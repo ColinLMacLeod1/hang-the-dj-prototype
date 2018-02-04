@@ -89,7 +89,7 @@ export default class Party extends Component {
   
   //plays a specific song based on albumID and track number
   playSong = (songObj) => {
-      trackNum = trackNum-1;
+      var trackNum = songObj.trackNum-1;
         const self = this;
         axios.request('https://api.spotify.com/v1/me/player/play',{
             method: 'put',
