@@ -17,12 +17,12 @@ export default class Party extends Component {
   }
 
   componentDidMount() {
-    this.getQueue()
-      //setInterval(()=>this.getQueue(), 5000);
+    this.initialQueue()
+    setInterval(()=>this.getQueue(), 1000);
 
   }
 
-  getQueue = () => {
+  initialQueue = () =>{
     const self = this;
     axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
       console.log(res.data)
@@ -32,13 +32,43 @@ export default class Party extends Component {
     })
   }
 
+  getQueue = () => {
+    const self = this;
+    var newQueue = self.state.queue
+    console.log("beginning of getQueue", newQueue)
+    console.log("self:", newQueue)
+    axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
+      console.log(res.data)
+      for(var i=0;i<res.data.length;i++){
+        var count = 0;
+        for(var j=0;j<self.state.queue.length;j++){
+          if(res.data[i].title==self.state.queue[j].title){
+            break
+          }
+          count++
+        }
+        for(var k=0;k<self.state.played.length;k++){
+          if(res.data[i].title==self.state.played[k].title){
+            break
+          }
+          count++
+        }
+        if(count == self.state.played.length+self.state.queue.length && self.state.currentSong.title !== res.data[i].title){
+          newQueue.push(res.data[i])
+        }
+      }
+      self.setState({
+        queue:newQueue
+      })
+    })
+  }
+
   playNext = () => {
     this.state.played.push(this.state.currentSong);
-    console.log(this.state.played)
-    
     let song =  this.play(this.state.queue[0].title)
 
     let newQueue = this.state.queue.slice(1)
+    console.log("newQueue playnext",newQueue)
     this.setState({
       currentSong:song,
       queue: newQueue
