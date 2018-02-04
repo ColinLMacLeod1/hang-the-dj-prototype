@@ -9,7 +9,7 @@ export default class Party extends Component {
   constructor(props) {
     super(props);
     this.state={
-      currentSong: {title:'Hang the DJ',artist:'Jeff Tovar',albumName:'Hang the DJ',artwork:'../../assets/images/dj-logo.jpg',trackNum:1},
+      currentSong: {title:'Hang the DJ',artist: 'QHacks',albumName:'ft. Stdlib, Preact, MongoDB',artwork:'../../assets/images/dj-logo.jpg',trackNum:1},
       played: [],
       queue: [],
       allSongs: [],
@@ -37,10 +37,11 @@ export default class Party extends Component {
 
   getQueue = () => {
     const self = this;
-    var newQueue = self.state.queue
-    var newSongs = self.state.allSongs
+    var newQueue = self.state.queue.slice()
+    var newSongs = self.state.allSongs.slice()
     axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
-      if(self.state.queue.length>0){
+      console.log(res)
+      if(res.data.length>0){
         for(var i=0;i<res.data.length;i++){
           var count = 0;
           for(var z=0;z<self.state.allSongs.length;z++){
@@ -51,7 +52,12 @@ export default class Party extends Component {
           if(self.state.currentSong.title == res.data[i].title){
             count++
           }
+          if (self.state.allSongs.length == 0){
+            console.log("NO SONGS QUEUED YET")
+            count = 0
+          }
           if(count == 0){
+            console.log("COUNT 0")
             newQueue.push(res.data[i])
             newSongs.push(res.data[i])
             self.setState({
@@ -68,12 +74,13 @@ export default class Party extends Component {
   playNext = () => {
     const self = this;
     var song = self.state.queue[0].title;
+    var artist = self.state.queue[0].artist;
     var time = 0;
     let newQueue = self.state.queue.slice(1)
     self.setState({
       queue: newQueue
     })
-    self.getSongObj(song)
+    self.getSongObj(song, artist)
     setTimeout(()=>{
       time = self.state.currentSong.time-5005;
       console.log(time)
@@ -86,7 +93,7 @@ export default class Party extends Component {
   }
 
   //takes a song name and returns a song object
-  getSongObj = (toSearch) => {
+  getSongObj = (toSearch, artist) => {
       var albumID = '';
       var trackNum = '';
       var songObj = {};
@@ -97,7 +104,7 @@ export default class Party extends Component {
         headers: {
             'Authorization': 'Bearer ' + this.state.token,
         }, params: {
-            q: toSearch,
+            q: toSearch+ ' ' + artist,
             type: 'track',
             limit: 1
         }
