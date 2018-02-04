@@ -1,18 +1,17 @@
 {
-  "name": "handle-text",
-  "version": "0.0.39",
+  "name": "get-queue",
+  "version": "0.0.10",
   "description": "",
   "author": "colinlmacleod1 <colinlmacleod1@gmail.com>",
   "main": "functions/__main__.js",
   "dependencies": {
-    "axios": "^0.17.1",
     "lib": "^3.0.1",
     "mongoose": "^5.0.3"
   },
   "private": true,
   "stdlib": {
     "build": "faaslang",
-    "name": "colinlmacleod1/handle-text",
+    "name": "colinlmacleod1/get-queue",
     "timeout": 10000,
     "publish": true,
     "personalize": {
