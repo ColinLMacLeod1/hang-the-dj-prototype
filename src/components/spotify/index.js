@@ -15,8 +15,19 @@ export default class Spotify extends Component {
       redirect: 'http://localhost:8081/spotify/',
       responseType: 'code',
       scopes: ['user-read-playback-state','user-read-private'],
-      imgurl: ''
+      imgurl: '',
+      queue:[]
     }
+  }
+
+  getQueue = () => {
+    const self = this;
+    axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
+      console.log(res.data)
+      self.setState({
+        queue:res.data
+      })
+    })
   }
 
   //not needed
@@ -90,7 +101,7 @@ export default class Spotify extends Component {
           console.log(trackID)
         })
   }
-  
+
   //grab a specific track
   getTrack = () => {
       console.log(this.state.token2);
@@ -105,13 +116,13 @@ export default class Spotify extends Component {
           console.log(response.data.artists)
         ))
   }
-  
+
   //takes a track name as a string, finds the name and ID
   searchTrack = (toSearch) => {
-      
+
       console.log(toSearch);
       console.log(this.state.token2);
-      
+
       console.log("Searching for track.");
       const self = this;
       axios.request('https://api.spotify.com/v1/search',{
@@ -132,7 +143,7 @@ export default class Spotify extends Component {
         })
         */
   }
-  
+
   render() {
     return (
       <div class={style.spotify}>
@@ -148,6 +159,7 @@ export default class Spotify extends Component {
         <button onClick={this.getTrack}>Get the killers</button>
         <button onClick={this.getToken}>Get token </button>
         <button onClick={() => this.searchTrack('its raining men')}>Find the rain.</button>
+        <button onClick={this.getQueue}> Get Queue </button>
         <img src={this.state.imgurl} />
       </div>
     )
