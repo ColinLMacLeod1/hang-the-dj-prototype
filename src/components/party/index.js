@@ -85,7 +85,7 @@ export default class Party extends Component {
      return songObj;
     }
    
-  }
+  
   
   //plays a specific song based on albumID and track number
   playSong = (songObj) => {
@@ -109,7 +109,6 @@ export default class Party extends Component {
     return (
       <div class={style.party}>
         <h1 style={{width:"100vw"}}> Your Party Queue </h1>
-        <div class={style.partyNum}>Your party's number is: <span>(123)-456-7890</span></div>
         <button onClick={()=>this.playNext()}>Play Next</button>
         <div class={style.wrapper}>
               <div class={style.queueHeader}>Now Playing</div>
