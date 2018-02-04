@@ -163,10 +163,10 @@ export default class Party extends Component {
             <div class={style.queueWrapper}>
             {this.state.queue.map((songObj,index)=>(
             <Card className={style.queueElement} key={index}>
-              <CardHeader style={{padding:'5px 16px 0px 16px'}}
+              <CardHeader style={{padding:'5px 16px 0px 90px'}}
                 title={songObj.title}
                 subtitle={songObj.artist}
-                avatar={songObj.artwork}/>
+                />
             </Card>
             ))}
           </div>
