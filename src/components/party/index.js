@@ -12,7 +12,9 @@ export default class Party extends Component {
       currentSong: {title:'Viva La Vida',artist:'Coldplay',album:'Viva La Vida',artwork:'./assets/images/test.jpg',trackNum:1},
       played: [],
       queue: [],
-      token: props.token
+      token: props.token,
+      ugly: 0
+      
     }
   }
 
@@ -25,7 +27,6 @@ export default class Party extends Component {
   initialQueue = () =>{
     const self = this;
     axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
-      console.log(res.data)
       self.setState({
         queue:res.data
       })
@@ -35,10 +36,7 @@ export default class Party extends Component {
   getQueue = () => {
     const self = this;
     var newQueue = self.state.queue
-    console.log("beginning of getQueue", newQueue)
-    console.log("self:", newQueue)
     axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
-      console.log(res.data)
       for(var i=0;i<res.data.length;i++){
         var count = 0;
         for(var j=0;j<self.state.queue.length;j++){
@@ -65,10 +63,9 @@ export default class Party extends Component {
 
   playNext = () => {
     this.state.played.push(this.state.currentSong);
-    let song =  this.play(this.state.queue[0].title)
-
+    let song =  this.getSongObj(this.state.queue[0].title)
+    this.playSong(song)
     let newQueue = this.state.queue.slice(1)
-    console.log("newQueue playnext",newQueue)
     this.setState({
       currentSong:song,
       queue: newQueue
@@ -76,19 +73,18 @@ export default class Party extends Component {
   }
 
   //takes a song name and returns a song object
-  play = (toSearch) => {
+  getSongObj = (toSearch) => {
       var albumID = '';
       var trackNum = '';
       var songObj = {};
       console.log(toSearch);
-      console.log(this.state.token2);
 
       console.log("Searching for track.");
       const self = this;
       axios.request('https://api.spotify.com/v1/search',{
         method: 'get',
         headers: {
-            'Authorization': 'Bearer ' + this.state.token2,
+            'Authorization': 'Bearer ' + this.state.token,
         }, params: {
             q: toSearch,
             type: 'track',
@@ -109,30 +105,37 @@ export default class Party extends Component {
             artwork: imgURL,
             artist: art
         }
-        
+        console.log("song obj")
+        console.log(songObj)
+        self.setState({
+            currentSong: songObj
+        })
       });
-     this.playSong(songObj);
-     return songObj;
+      
     }
    
   
   
-  //plays a specific song based on albumID and track number
-  playSong = (songObj) => {
+  //plays a specific song based on a song object
+  playSong = () =>  {
+      console.log("FUCK");
+      let songObj = this.state.currentSong;
+      console.log(songObj);
       var trackNum = songObj.trackNum-1;
         const self = this;
         axios.request('https://api.spotify.com/v1/me/player/play',{
             method: 'put',
             headers: {
-                'Authorization': 'Bearer ' + self.state.token2
+                'Authorization': 'Bearer ' + self.state.token
             }, data:{
-                "context_uri": "spotify:album:"+songObj.albumID,
+                "context_uri": "spotify:album:"+songObj.album,
                 "offset": { "position" : songObj.trackNum }         
             }
         }).then((response,req)=>{
           console.log(response.data)
           console.log(trackNum)
         })
+
   }
   
   render() {
@@ -167,7 +170,10 @@ export default class Party extends Component {
           </div>
 
         </div>
+        <button onClick={() => this.getSongObj("its raining men")}>Get Song</button>
+        <button onClick={() => this.playSong() }>Play song</button>
       </div>
+      
     )
   }
 }
