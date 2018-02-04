@@ -10,7 +10,8 @@ export default class Party extends Component {
     this.state={
       currentSong: {title:'Viva La Vida',artist:'Coldplay',album:'Viva La Vida',artwork:'./assets/images/test.jpg',trackNum:1},
       played: [],
-      queue: []
+      queue: [],
+      token: props.token
     }
   }
 
