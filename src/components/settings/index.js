@@ -2,6 +2,7 @@ import {h, Component} from 'preact';
 import style from './style.less';
 import axios from 'axios'
 import qs from 'qs'
+import { Link } from 'preact-router';
 
 export default class Party extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ export default class Party extends Component {
 
   render() {
       const self = this;
+      var tohref = "/party/?token="+self.state.token;
     return (
       <div class={style.settings}>
         <h1 style={{width:"100vw"}}> Party Settings </h1>
@@ -98,7 +100,7 @@ export default class Party extends Component {
                       <input type="radio" name="override" value="yes" checked={this.state.override === 'yes'} onChange={this.handleOptionChange}/> <span>Yes</span>
                       <input type="radio" name="override" value="no" checked={this.state.override === 'no'} onChange={this.handleOptionChange}/> <span>No</span>
               </div>
-               <Link href="/party/?token="+self.state.token><button class={style.submit} type="submit">Start My Party!</button></Link>
+               <Link href={tohref}><button class={style.submit} type="submit">Start My Party!</button></Link>
             </form>
           </div>
         </div>
