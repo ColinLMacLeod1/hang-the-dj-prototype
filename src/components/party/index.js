@@ -8,13 +8,15 @@ export default class Party extends Component {
   constructor(props) {
     super(props);
     this.state={
-      currentSong: {title:'Viva La Vida',artist:'Coldplay',album:'Viva La Vida',artwork:'./assets/images/test.jpg',id:''},
+      currentSong: {title:'Viva La Vida',artist:'Coldplay',album:'Viva La Vida',artwork:'./assets/images/test.jpg',trackNum:1},
+      played: [],
       queue: []
     }
   }
 
   componentDidMount() {
-      setInterval(()=>this.getQueue(), 1000);
+    this.getQueue()
+      //setInterval(()=>this.getQueue(), 5000);
 
   }
 
@@ -28,10 +30,29 @@ export default class Party extends Component {
     })
   }
 
+  playNext = () => {
+    this.state.played.push(this.state.currentSong);
+    console.log(this.state.played)
+    let song =  this.play(this.state.queue[0].title)
+
+    let newQueue = this.state.queue.slice(1)
+    this.setState({
+      currentSong:song,
+      queue: newQueue
+    })
+
+  }
+
+  play = (songTitle) => {
+    console.log(songTitle)
+    return {title:songTitle,artist:'Coldplay',album:'Viva La Vida',artwork:'./assets/images/test.jpg',id:''};
+  }
+
   render() {
     return (
       <div class={style.party}>
         <h1 style={{width:"100vw"}}> Your Party Queue </h1>
+        <button onClick={()=>this.playNext()}>Play Next</button>
         <div class={style.wrapper}>
               <div class={style.queueHeader}>Now Playing</div>
 
