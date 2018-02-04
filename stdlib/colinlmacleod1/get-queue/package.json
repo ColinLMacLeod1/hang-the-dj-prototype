@@ -1,6 +1,6 @@
 {
   "name": "get-queue",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "author": "colinlmacleod1 <colinlmacleod1@gmail.com>",
   "main": "functions/__main__.js",
