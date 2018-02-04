@@ -77,9 +77,7 @@ export default class Party extends Component {
       var albumID = '';
       var trackNum = '';
       var songObj = {};
-      console.log(toSearch);
 
-      console.log("Searching for track.");
       const self = this;
       axios.request('https://api.spotify.com/v1/search',{
         method: 'get',
@@ -105,8 +103,6 @@ export default class Party extends Component {
             artwork: imgURL,
             artist: art
         }
-        console.log("song obj")
-        console.log(songObj)
         self.setState({
             currentSong: songObj
         })
@@ -118,9 +114,7 @@ export default class Party extends Component {
   
   //plays a specific song based on a song object
   playSong = () =>  {
-      console.log("FUCK");
       let songObj = this.state.currentSong;
-      console.log(songObj);
       var trackNum = songObj.trackNum-1;
         const self = this;
         axios.request('https://api.spotify.com/v1/me/player/play',{
@@ -129,7 +123,7 @@ export default class Party extends Component {
                 'Authorization': 'Bearer ' + self.state.token
             }, data:{
                 "context_uri": "spotify:album:"+songObj.album,
-                "offset": { "position" : songObj.trackNum }         
+                "offset": { "position" : trackNum }         
             }
         }).then((response,req)=>{
           console.log(response.data)
