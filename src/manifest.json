@@ -1,19 +1,14 @@
 {
-  "name": "Preact PWA",
-  "short_name": "Preact PWA",
+  "name": "Hang the DJ",
+  "short_name": "Hang the DJ",
   "start_url": "./",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#fff",
-  "theme_color": "#673ab8",
+  "theme_color": "#000",
   "icons": [{
-    "src": "./assets/icons/android-chrome-192x192.png",
-    "type": "image/png",
-    "sizes": "192x192"
-  },
-  {
-    "src": "./assets/icons/android-chrome-512x512.png",
-    "type": "image/png",
-    "sizes": "512x512"
+    "src": "./assets/images/dj-logo.jpg",
+    "type": "image/jpg",
+    "sizes": "219x230"
   }]
 }

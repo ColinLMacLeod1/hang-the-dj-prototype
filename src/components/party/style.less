@@ -6,7 +6,7 @@ span + div{
 }
 
 .party{
-  padding: 56px 20px;
+  padding: 57px 0;
 
 }
 
@@ -17,7 +17,7 @@ span + div{
 .song{
   display: flex;
   justify-content: center;
-  margin: 2vh 20vw 2vh 20vw;
+  margin: 2vh auto 2vh auto;
   width: 60vw;
 }
 
@@ -29,6 +29,7 @@ span + div{
 .nowPlayingWrapper{
   display: inline-block;
   margin-bottom: 15px;
+  min-width: 320px;
 }
 
 .queueWrapper{
@@ -39,16 +40,18 @@ span + div{
 .queueElement{
   display: block;
   width: 50vw;
+  min-width: 320px;
   margin-bottom: 15px;
 }
 
 .queueHeader{
-  margin: 10px 0 10px 10px;
+  margin: 10px 0 10px 0;
 }
 
 .nowPlayingElement{
   display: inline-block;
   width: 20vw;
+  min-width: 320px;
 }
 
 .partyNum{
@@ -57,16 +60,14 @@ span + div{
 }
 
 .nextSongBtn{
-  margin-left: 25px;
   background: none;
   border: 2px solid;
   font: 300 1em 'Fira Sans', sans-serif;
   line-height: 1;
-  margin: 0.5em;
+  margin: 20px 10px 20px 10px;
   padding: 0.5em 1em;
   color: #c0eddc;
   transition: 0.25s;
-  margin-left: 55px;
 
 
 }
@@ -74,7 +75,7 @@ span + div{
 .nextSongBtn:focus {
     box-shadow:
       inset -6.9em 0 0 0 #2ac288,
-      inset 6.9em 0 0 0 #2ac288;  
+      inset 6.9em 0 0 0 #2ac288;
     border-color: #2ac288;
     color: #fff;
 }

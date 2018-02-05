@@ -19,16 +19,16 @@ export default class Party extends Component {
   }
 
   componentDidMount() {
-    this.getToken();
+      this.getToken()
   }
-  
+
   //get access token
   getToken = () => {
       const self = this;
     axios.request('https://accounts.spotify.com/api/token',{
         method: 'post',
         headers:{
-            'Authorization': 'Basic '+btoa('833338d91c9a48718c8c12cf886287d7'+':'+'fa46eb34f64b45b6851af41a62b219d1'),
+            'Authorization': 'Basic '+btoa('eabef32fc8ef48778d4208844a93701e'+':'+'e2c35a30b57940d3b9f4c9daf3d048b4'),
             'Content-Type':'application/x-www-form-urlencoded'
         }, data: qs.stringify({
             grant_type: "authorization_code",
@@ -40,9 +40,9 @@ export default class Party extends Component {
       self.setState({
           token: response.data.access_token
       })
-    ))
+    )).catch((err)=>console.log(err))
   }
-  
+
   addSong = () => {
     var array = this.state.queue
     array.push({song: "Song", artist: "Artist"})

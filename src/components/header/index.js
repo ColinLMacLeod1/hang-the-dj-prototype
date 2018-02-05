@@ -7,11 +7,6 @@ export default class Header extends Component {
 		return (
 			<header class={style.header}>
 				<h1>Hang the DJ</h1>
-				<nav>
-                    <Link href="/">Home</Link>	
-					<Link href="/party">Party</Link>
-                    <Link href="/settings">Settings</Link>
-				</nav>
 			</header>
 		);
 	}
