@@ -2,7 +2,6 @@
 A live party-sourced soundtrack for your party where guests can text in song requests and they will be added automatically to the queue using Stdlib, MessageBird, and the Spotify API
 
 #### [Check it out!](https://stoic-nightingale-780556.netlify.com/)
-
 Works as a PWA
 
 The host just need to visit the page and sign in with spotify and guests can test the displayed number to add songs to the queue. The host can skip and remove songs.
