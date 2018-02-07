@@ -1,4 +1,4 @@
-const lib = require('lib')({token: "axNvrmzjPbg4FOWFi_WaHT49FoIWjnaxZZLTrft8tb9wZc-R7UyhUQgqskQF3x_U"});
+const lib = require('lib')({token: process.env.STDLIBTOKEN});
 
 /**
 * A basic Hello World function

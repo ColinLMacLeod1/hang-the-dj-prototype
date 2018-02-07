@@ -1,7 +1,7 @@
-const lib = require('lib')({token: "axNvrmzjPbg4FOWFi_WaHT49FoIWjnaxZZLTrft8tb9wZc-R7UyhUQgqskQF3x_U"});
+const lib = require('lib')({token: process.env.STDLIBTOKEN});
 const mongoose = require('mongoose');
 const Song = require('../models/songs.js');
-mongoose.connect("mongodb://root:ETDzMb2fmzeH@104.198.164.150:27017")
+mongoose.connect("mongodb://"+process.env.DBURI))
 /**
  * @param {string} sender The phone number that sent the text to be handled
  * @param {string} receiver The StdLib phone number that received the SMS
