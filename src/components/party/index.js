@@ -37,54 +37,6 @@ export default class Party extends Component {
         queue: newQueue
       })
     })
-
-
-  }
-
-  initialQueue = () =>{
-    const self = this;
-    axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
-      self.setState({
-        queue:res.data,
-        allSongs:res.data,
-      })
-    }).catch((err)=>console.log(err))
-  }
-
-  getQueue = () => {
-    const self = this;
-    var newQueue = self.state.queue.slice()
-    var newSongs = self.state.allSongs.slice()
-    axios.get('https://colinlmacleod1.stdlib.com/get-queue').then((res)=>{
-      console.log(res)
-      if(res.data.length>0){
-        for(var i=0;i<res.data.length;i++){
-          var count = 0;
-          for(var z=0;z<self.state.allSongs.length;z++){
-            if(res.data[i].title==self.state.allSongs[z].title){
-                count++
-            }
-          }
-          if(self.state.currentSong.title == res.data[i].title){
-            count++
-          }
-          if (self.state.allSongs.length == 0){
-            console.log("NO SONGS QUEUED YET")
-            count = 0
-          }
-          if(count == 0){
-            console.log("COUNT 0")
-            newQueue.push(res.data[i])
-            newSongs.push(res.data[i])
-            self.setState({
-              queue:newQueue,
-              allSongs: newSongs
-            })
-          }
-        }
-
-      }
-    })
   }
 
   playNext = () => {
@@ -124,67 +76,6 @@ export default class Party extends Component {
     }).catch(err=>console.log("Data:",err))
   }
 
-  //takes a song name and returns a song object
-  getSongObj = (toSearch, artist) => {
-      var albumID = '';
-      var trackNum = '';
-      var songObj = {};
-
-      const self = this;
-      axios.request('https://api.spotify.com/v1/search',{
-        method: 'get',
-        headers: {
-            'Authorization': 'Bearer ' + this.state.token,
-        }, params: {
-            q: toSearch+ ' ' + artist,
-            type: 'track',
-            limit: 1
-        }
-      }).then((response)=>{
-
-        var n = response.data.tracks.items[0].name
-        var albumID = response.data.tracks.items[0].album.id
-        var tNum = response.data.tracks.items[0].track_number
-        var imgURL = response.data.tracks.items[0].album.images[1].url
-        var art = response.data.tracks.items[0].artists[0].name
-        var length = response.data.tracks.items[0].duration_ms
-        var albumName = response.data.tracks.items[0].album.name
-
-        songObj={
-            title: n,
-            album: albumID,
-            trackNum: tNum,
-            artwork: imgURL,
-            artist: art,
-            time: length,
-            albumName: albumName
-        }
-        self.setState({
-          currentSong: songObj
-        })
-        self.playSong(songObj)
-
-      });
-
-    }
-
-  //plays a specific song based on a song object
-  playSong = (songObj) =>  {
-      var trackNum = songObj.trackNum-1;
-        const self = this;
-        axios.request('https://api.spotify.com/v1/me/player/play',{
-            method: 'put',
-            headers: {
-                'Authorization': 'Bearer ' + self.state.token
-            }, data:{
-                "context_uri": "spotify:album:"+songObj.album,
-                "offset": { "position" : trackNum }
-            }
-        }).then((response,req)=>{
-          //console.log(response.data)
-        })
-
-  }
 
   removeSong = (index) => {
     console.log("remove ", index)

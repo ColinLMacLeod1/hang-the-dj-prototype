@@ -36,14 +36,6 @@ export default class Party extends Component {
     )).catch((err)=>console.log(err))
   }
 
-  addSong = () => {
-    var array = this.state.queue
-    array.push({song: "Song", artist: "Artist"})
-    this.setState({
-      queue: array
-    })
-  }
-
   handleOptionChange=(changeEvent)=> {
     this.setState({
       [changeEvent.target.name]: changeEvent.target.value
