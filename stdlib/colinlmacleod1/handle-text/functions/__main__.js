@@ -13,14 +13,14 @@ mongoose.connect("mongodb://"+process.env.DBURI))
 
 
 module.exports = async (sender="Test", receiver="Test", message="Test", createdDatetime="Test", context) => {
+  var code = message.split(": ")
+  code = code[0]
   var messages = message.split(" - ");
-
-  console.log(messages)
-  console.log("Connected")
   var newSong = new Song({
     sender: sender,
     title: messages[0],
-    artist: messages[1]
+    artist: messages[1],
+    code: code
 	});
 	console.log(newSong)
   await newSong.save();

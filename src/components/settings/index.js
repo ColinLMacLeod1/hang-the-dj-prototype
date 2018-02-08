@@ -25,20 +25,13 @@ export default class Party extends Component {
   //get access token
   getToken = () => {
       const self = this;
-    axios.request('https://accounts.spotify.com/api/token',{
-        method: 'post',
-        headers:{
-            'Authorization': 'Basic '+btoa('eabef32fc8ef48778d4208844a93701e'+':'+'e2c35a30b57940d3b9f4c9daf3d048b4'),
-            'Content-Type':'application/x-www-form-urlencoded'
-        }, data: qs.stringify({
-            grant_type: "authorization_code",
-            code: self.state.code,
-            redirect_uri: self.state.redirect,
-        })
+    axios.post('http://localhost:3000/auth',{
+          code:this.state.code,
+          redirect: this.state.redirect
     }).then((response)=>(
-      console.log(response.data.access_token),
+      console.log(response.data),
       self.setState({
-          token: response.data.access_token
+          token: response.data
       })
     )).catch((err)=>console.log(err))
   }
