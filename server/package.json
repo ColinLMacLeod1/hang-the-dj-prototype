@@ -1,0 +1,26 @@
+{
+  "name": "hang-the-dj-server",
+  "version": "1.0.0",
+  "description": "Your crowdsourced soundtrack",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "DJ",
+    "Spotify"
+  ],
+  "license": "MIT",
+  "author": "Colin",
+  "dependencies": {
+    "axios": "^0.17.1",
+    "body-parser": "^1.18.2",
+    "btoa": "^1.1.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongoose": "^5.0.3",
+    "promise-polyfill": "^6.0.2",
+    "socket.io": "^2.0.4",
+    "socket.io-client": "^2.0.4",
+    "spotify-web-api-js": "^0.23.0"
+  }
+}

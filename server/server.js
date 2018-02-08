@@ -30,23 +30,29 @@ const publicPath = express.static(path.join(__dirname, './dist'));
 
 // Constants
 const port = 3000;
-interval = 1000;
+const interval = 1000;
+const day = 86400000;
 var unassignedSongs = [];
+
 
 // Requests
 io.on('connection',(socket)=>{
   console.log('Someone Connected')
-  const code = Math.floor(Math.random()*4000)
+  const code = String(Math.floor(Math.random()*4000))
   socket.emit('code',code)
-  setInterval(()=>{
+  var setInteravlID = setInterval(()=>{
     console.log("check")
     for(var i=0;i<unassignedSongs.length;i++){
       if(unassignedSongs[i].code==code){
-        socket.emmit('newSong', unassignedSongs[i])
+        console.log("Sending ",unassignedSongs[i].title)
+        socket.emit('newSong', unassignedSongs[i])
         unassignedSongs.splice(i,1)
       }
     }
   }, interval)
+  setTimeout(()=>{
+    clearInterval(setInteravlID)
+  }, day)
 })
 
 app.post('/auth',(req,res)=>{
@@ -123,6 +129,7 @@ app.post('/songdata',(req,res)=>{
 })
 
 app.post('/newsong',(req,res)=>{
+  console.log(req.body.title)
   unassignedSongs.push(req.body)
 })
 

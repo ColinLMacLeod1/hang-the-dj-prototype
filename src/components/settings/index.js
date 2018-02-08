@@ -25,7 +25,7 @@ export default class Party extends Component {
   //get access token
   getToken = () => {
       const self = this;
-    axios.post('http://localhost:3000/auth',{
+    axios.post('https://hang-the-dj-server-pqfesvpbvg.now.sh/auth',{
           code:this.state.code,
           redirect: this.state.redirect
     }).then((response)=>(

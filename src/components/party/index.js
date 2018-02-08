@@ -22,15 +22,20 @@ export default class Party extends Component {
   }
 
   componentDidMount() {
-    const socket = openSocket('http://localhost:3000')
+    const self = this;
+    const socket = openSocket('https://hang-the-dj-server-pqfesvpbvg.now.sh')
     socket.on('code',code => {
       this.setState({
         code: code
       })
     })
     socket.on('newSong',newSong =>{
-      newQueue = this.state.queue.slice();
+      console.log("New song: "+newSong.title)
+      var newQueue = this.state.queue.slice();
       newQueue.push(newSong)
+      self.setState({
+        queue: newQueue
+      })
     })
 
 
@@ -96,7 +101,7 @@ export default class Party extends Component {
     self.setState({
       queue: newQueue
     })
-    axios.post('http://localhost:3000/songdata',{
+    axios.post('https://hang-the-dj-server-pqfesvpbvg.now.sh/songdata',{
       title: song,
       artist: artist,
       token: self.state.token
@@ -104,7 +109,7 @@ export default class Party extends Component {
       self.setState({
         currentSong: response.data
       })
-      axios.post('http://localhost:3000/play',{
+      axios.post('https://hang-the-dj-server-pqfesvpbvg.now.sh/play',{
           songObj:response.data,
           token: self.state.token
         }).then(()=>{

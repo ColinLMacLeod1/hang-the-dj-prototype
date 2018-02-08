@@ -1,6 +1,6 @@
 {
   "name": "handle-text",
-  "version": "0.0.40",
+  "version": "0.0.44",
   "description": "",
   "author": "colinlmacleod1 <colinlmacleod1@gmail.com>",
   "main": "functions/__main__.js",

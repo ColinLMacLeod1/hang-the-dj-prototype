@@ -1,7 +1,6 @@
 const lib = require('lib')({token: process.env.STDLIBTOKEN});
-const mongoose = require('mongoose');
 const Song = require('../models/songs.js');
-mongoose.connect("mongodb://"+process.env.DBURI))
+const axios = require('axios')
 /**
  * @param {string} sender The phone number that sent the text to be handled
  * @param {string} receiver The StdLib phone number that received the SMS
@@ -13,15 +12,15 @@ mongoose.connect("mongodb://"+process.env.DBURI))
 
 
 module.exports = async (sender="Test", receiver="Test", message="Test", createdDatetime="Test", context) => {
-  var code = message.split(": ")
-  code = code[0]
-  var messages = message.split(" - ");
-  var newSong = new Song({
+  var split1 = message.split(": ")
+  var code = split1[0]
+  var messages = split1[1].split(" - ");
+  var newSong = {
     sender: sender,
     title: messages[0],
     artist: messages[1],
     code: code
-	});
+	};
+  let response = await axios.post("https://hang-the-dj-server-pqfesvpbvg.now.sh/newsong",newSong);
 	console.log(newSong)
-  await newSong.save();
 };
