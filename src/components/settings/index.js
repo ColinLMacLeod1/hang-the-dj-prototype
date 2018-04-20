@@ -54,7 +54,6 @@ export default class Party extends Component {
       <div class={style.settings}>
         <h1 style={{width:"100vw"}}> Party Settings </h1>
         <br></br>
-
         <div class={style.supportText}>Default settings have been set for your party. If you would like, you can change them below</div>
         <div class={style.wrapper}>
           <div class={style.formWrapper}>
