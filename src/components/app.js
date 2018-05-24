@@ -1,15 +1,13 @@
-import { h, Component } from 'preact';
-import { Router } from 'preact-router';
+import { h, Component } from 'preact'
+import { Router } from 'preact-router'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-import Header from './header';
-import Home from './home';
-import Profile from './profile';
-import Party from './party';
-import Settings from './settings';
-import Spotify from './spotify';
-
-
+import Header from './header'
+import Home from './home'
+import Profile from './profile'
+import Party from './party'
+import Settings from './settings'
+import Spotify from './spotify'
 
 export default class App extends Component {
 	/** Gets fired when the route changes.
@@ -17,8 +15,8 @@ export default class App extends Component {
 	 *	@param {string} event.url	The newly routed URL
 	 */
 	handleRoute = e => {
-		this.currentUrl = e.url;
-	};
+		this.currentUrl = e.url
+	}
 
 	componentDidMount() {
 		// (function() {var cors_api_host = 'cors-anywhere.herokuapp.com';
@@ -39,24 +37,23 @@ export default class App extends Component {
 		// };})()
 	}
 
-
 	render() {
 		return (
-		  <div id="app">
-        <MuiThemeProvider>
-          <div>
-						<Header/>
+			<div id="app">
+				<MuiThemeProvider>
+					<div>
+						<Header />
 						<Router onChange={this.handleRoute}>
-						  <Home path="/" />
-						  <Profile path="/profile/" user="me" />
-						  <Profile path="/profile/:user" />
-						  <Party path="/party" />
-		          <Settings path="/settings" />
-		          <Spotify path="/spotify"/>
+							<Home path="/" />
+							<Profile path="/profile/" user="me" />
+							<Profile path="/profile/:user" />
+							<Party path="/party" />
+							<Settings path="/settings" />
+							<Spotify path="/spotify" />
 						</Router>
-          </div>
-        </MuiThemeProvider>
-		  </div>
-		);
+					</div>
+				</MuiThemeProvider>
+			</div>
+		)
 	}
 }
